@@ -22,15 +22,18 @@ def libros():
 
 #Leer el id del archivo json
 
-@app.route('/libros/<id>', methods=['GET'])
+@app.route('/libros/<int:id>', methods=['GET'])
 def libro(id):
     json_file = open('libros.json')
     data = json.load(json_file)
-    #print(data['libros'][int(id)])    
-    try:
-        return jsonify(data['libros'][int(id)])
-    except IndexError:
-        return "No existe el libro"
+    print(data['libros'][id])     
+    
+    return jsonify(data['libros'][id])    
+   
+    
+    
+  
+    
         
   
     
