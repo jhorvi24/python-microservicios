@@ -8,35 +8,28 @@ app = Flask(__name__)
 
 
 @app.route('/')
-
 def index():
-    return "Listo para recibir una solicitud"
+    return jsonify("Esperando recibir una solicitud")
+     
      
 @app.route('/libros', methods=['GET'])
 def libros():
     #Read the json file
     json_file = open('libros.json')
-    data = json.load(json_file)    
-    print(data['libros'][2])    
-    return jsonify(data)
+    data = json.load(json_file)       
+    return jsonify(data), 200
 
 #Leer el id del archivo json
-
 @app.route('/libros/<int:id>', methods=['GET'])
-def libro(id):
-    json_file = open('libros.json')
-    data = json.load(json_file)
-    print(data['libros'][id])     
-    
-    return jsonify(data['libros'][id])    
+def reviewID(id):
+    with open('libros.json') as json_file:
+        data = json.load(json_file)        
+    rev=data['libros']  
+    for i in rev:        
+        if i["book-id"]==id:
+            return jsonify(i)        
+    return jsonify("No se encotró el libro")  
    
-    
-    
-  
-    
-        
-  
-    
 
 if __name__ == '__main__':
     app.run(host='0.0.0.0',debug=True)
