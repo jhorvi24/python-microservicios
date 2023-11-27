@@ -2,12 +2,19 @@
 
 from flask import Flask, render_template, jsonify
 import json
+import socket
 
 app = Flask(__name__)
 
+def get_ip():    
+    hostname = socket.gethostname()
+    ip = socket.gethostbyname(hostname)
+    return hostname, ip
+
 @app.route('/')
 def index():
-    return jsonify("Listo para recibir una solicitud")
+    hostname, ip = get_ip()
+    return render_template('index.html', HOSTNAME=hostname, IP=ip)
 
 @app.route('/autores')
 def autores():
