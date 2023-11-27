@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: autor-deployment
+  labels:
+    app: app-autor
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: app-autor
+  template:
+    metadata:
+      labels:
+        app: app-autor
+    spec:
+      containers:
+        - name: app-autor
+          image: autor-app:1.0  
+          imagePullPolicy: Never    
+          ports:
+            - containerPort: 5000
