@@ -3,13 +3,18 @@
 from flask import Flask, render_template, request, jsonify
 import os
 import json
-
+import socket
 app = Flask(__name__)
 
+def get_ip():    
+    hostname = socket.gethostname()
+    ip = socket.gethostbyname(hostname)
+    return hostname, ip
 
 @app.route('/')
 def index():
-    return jsonify("Esperando recibir una solicitud")
+    hostname, ip = get_ip()
+    return render_template('index.html', HOSTNAME=hostname, IP=ip)
      
      
 @app.route('/libros', methods=['GET'])
@@ -32,6 +37,6 @@ def reviewID(id):
    
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0',debug=True)
+    app.run(host='0.0.0.0',debug=True, port=5002)
     
 
